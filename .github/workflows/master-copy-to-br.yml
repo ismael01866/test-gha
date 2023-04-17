@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: master
 
       - name: Specify node version
         uses: actions/setup-node@v2
@@ -22,10 +24,8 @@ jobs:
           node-version: "16"
           cache: "yarn"
 
-      - name: Open pull request
-        id: pull
-        uses: tretuna/sync-branches@1.2.0
-        with:
-          GITHUB_TOKEN: ${{github.token}}
-          FROM_BRANCH: "master"
-          TO_BRANCH: "master-br"
+      - name: Push changes to sync-branch
+        run: |
+          git checkout -b master-br || git checkout master-br
+          git merge --ff-only master
+          git push origin master-br
