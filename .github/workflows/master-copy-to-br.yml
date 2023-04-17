@@ -18,13 +18,7 @@ jobs:
         with:
           ref: master
 
-      - name: Specify node version
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-          cache: "yarn"
-
-      - name: Push changes to sync-branch
+      - name: Push changes to master-br
         run: |
           git checkout -b master-br || git checkout master-br
           git merge --ff-only master
